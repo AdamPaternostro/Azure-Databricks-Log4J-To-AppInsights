@@ -3,7 +3,7 @@ Connect your Spark Databricks clusters Log4J output to the Application Insights 
 
 ## Issues
 - This is currently being tested.
-- The sed command in teh appinsights_logging_init.sh could be smarter.  I just needs to append versus a full replace.
+- The sed command in the appinsights_logging_init.sh could be smarter.  I just needs to append versus a full replace.
 
 ## Configuration Steps
 1. Create Databricks workspace in Azure
@@ -23,9 +23,11 @@ Connect your Spark Databricks clusters Log4J output to the Application Insights 
 1. Import the notebook AppInsightsTest
 2. Run the notebook
     1. Cell 1 displays your application insights key
-    2. Cell 2 displays your log4j.properities file (which has the aiAppender)
-    3. Cell 3 writes to Log4J so the message will appear in App Insights
-    4. Cell 4 writes to App Insights via the App Insights API.  This will show as a "Custom Event" (customEvents table).
+    2. Cell 2 displays your jars (application insights jars should be in here)
+    3. Cell 3 displays your log4j.properities file on the "driver" (which has the aiAppender)
+    4. Cell 4 displays your log4j.properities file on the "executor" (which has the aiAppender)
+    5. Cell 5 writes to Log4J so the message will appear in App Insights
+    6. Cell 6 writes to App Insights via the App Insights API.  This will show as a "Custom Event" (customEvents table).
 3. Open your App Insights account in the Azure Portal
 4. Click on Search (top bar or left menu)
 5. Click Refresh (over and over until you see data)

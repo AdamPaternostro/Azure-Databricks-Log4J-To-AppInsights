@@ -12,11 +12,12 @@ Connect your Spark Databricks clusters Log4J output to the Application Insights 
 8. Create a cluster in Databricks (any size and shape is fine)
     - Make sure you click Advanced Options and "Init Scripts"
     - Add a script for "dbfs:/databricks/appinsights/appinsights_logging_init.sh"
+    ![alt tag](https://raw.githubusercontent.com/AdamPaternostro/Azure-Databricks-Log4J-To-AppInsights/master/images/databrickscluster.png)
 9. Start the cluster    
 
 ## Verification Steps
 1. Import the notebook AppInsightsTest
-2. Run the notebooke
+2. Run the notebook
     1. Cell 1 displays your application insights key
     2. Cell 2 displays your log4j.properities file (which has the aiAppender)
     3. Cell 3 writes to Log4J so the message will appear in App Insights
@@ -29,6 +30,8 @@ Connect your Spark Databricks clusters Log4J output to the Application Insights 
 
 ## Now that you have data
 1. The data will come into App Insights as a Trace
+![alt tag](https://raw.githubusercontent.com/AdamPaternostro/Azure-Databricks-Log4J-To-AppInsights/master/images/dimensiondata.png)
+
 2. This means the data will be in the customDimensions field as a property bad
 3. Open the Analytic query for App Insights
 4. Run ``` traces | order by timestamp desc ```
@@ -47,6 +50,9 @@ traces
   timestamp 
 | order by timestamp desc
 ```
+
+![alt tag](https://raw.githubusercontent.com/AdamPaternostro/Azure-Databricks-Log4J-To-AppInsights/master/images/formatteddata.png)
+
 6. Run ``` customEvents | order by timestamp  desc ``` to see the custom event your Notebook wrote
 7. Run ``` customMetrics | order by timestamp  desc ``` to see the HeartbeatState
 8. Don't know which field has your data: ``` traces | where * contains "Hi from App Insights on Databricks"  ```
@@ -59,3 +65,5 @@ traces
 5. Set up alerts: https://docs.microsoft.com/en-us/azure/azure-monitor/platform/alerts-log-query
 6. You can get JMX metrics: https://docs.microsoft.com/en-us/azure/azure-monitor/app/java-get-started#performance-counters.  You will need an ApplicationInsights.XML file: https://github.com/Microsoft/ApplicationInsights-Java/wiki/ApplicationInsights.XML.  You probably need to upload this to DBFS and then copy in the appinsights_logging_init.sh to the cluster.  I have not yet tested this setup.
 
+## To view the Databricks Notebook
+https://htmlpreview.github.io/?https://htmlpreview.github.com/?https://github.com/AdamPaternostro/Azure-Databricks-Log4J-To-AppInsights/blob/master/AppInsightsTest.html

@@ -3,8 +3,8 @@ Connect your Spark Databricks clusters Log4J output to the Application Insights 
 
 ## Issues
 - This is currently being tested.
-- When writing to Log4J from a notebook, it shows in the log4J logs, but not getting sent to app insights
 - The process works good and then the app insights appender seems to fall asleep?  I can still write using the API fine.
+- The sed command in teh appinsights_logging_init.sh could be smarter.  I just needs to append versus a full replace.
 
 ## Configuration Steps
 1. Create Databricks workspace in Azure
@@ -60,7 +60,7 @@ traces
 
 6. Run ``` customEvents | order by timestamp  desc ``` to see the custom event your Notebook wrote
 7. Run ``` customMetrics | order by timestamp  desc ``` to see the HeartbeatState
-8. Don't know which field has your data: ``` traces | where * contains "Hi from App Insights on Databricks"  ```
+8. Don't know which field has your data: ``` traces | where * contains "App Insights on Databricks"    ```
 
 ## Things you can do
 1. For query help see: https://docs.microsoft.com/en-us/azure/kusto/query/

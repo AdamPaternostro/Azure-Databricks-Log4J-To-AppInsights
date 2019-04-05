@@ -1,6 +1,11 @@
 # Azure-Databricks-Log4J-To-AppInsights
 Connect your Spark Databricks clusters Log4J output to the Application Insights Appender.  This will help you get your logs to a centralized location such as App Insights.  Many of my customers have been asking for this along with getting the Spark job data from the cluster (that will be a future project).
 
+## Issues
+- This is currently being tested.
+- When writing to Log4J from a notebook, it shows in the log4J logs, but not getting sent to app insights
+- The whole thing seems to timeout
+
 ## Configuration Steps
 1. Create Databricks workspace in Azure
 2. Create Application Insights in Azure (get your instrumentation key)

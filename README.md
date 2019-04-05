@@ -3,7 +3,6 @@ Connect your Spark Databricks clusters Log4J output to the Application Insights 
 
 ## Issues
 - This is currently being tested.
-- The process works good and then the app insights appender seems to fall asleep?  I can still write using the API fine.
 - The sed command in teh appinsights_logging_init.sh could be smarter.  I just needs to append versus a full replace.
 
 ## Configuration Steps

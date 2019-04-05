@@ -4,7 +4,7 @@ Connect your Spark Databricks clusters Log4J output to the Application Insights 
 ## Issues
 - This is currently being tested.
 - When writing to Log4J from a notebook, it shows in the log4J logs, but not getting sent to app insights
-- The whole thing seems to timeout
+- The process works good and then the app insights appender seems to fall asleep?  I can still write using the API fine.
 
 ## Configuration Steps
 1. Create Databricks workspace in Azure

@@ -9,7 +9,7 @@ Connect your Spark Databricks clusters Log4J output to the Application Insights 
 1. Create Databricks workspace in Azure
 2. Create Application Insights in Azure (get your instrumentation key)
 3. Install Databricks CLI
-4. Open your Azure workspace, click on the user icon and create a token
+4. Open your Azure Databricks workspace, click on the user icon and create a token
 5. Run "databricks configure --token" to configure the Databricks CLI
 6. Replace APPINSIGHTS_INSTRUMENTATIONKEY (00000000-0000-0000-0000-000000000000) in the appinsights_logging_init.sh script
 7. Run Upload-Items-To-Databricks.sh (change the .bat for Windows).  Linux you need to do a chmod +x on this file to run.

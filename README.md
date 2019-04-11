@@ -1,23 +1,33 @@
 # Azure-Databricks-Log4J-To-AppInsights
 Connect your Spark Databricks clusters Log4J output to the Application Insights Appender.  This will help you get your logs to a centralized location such as App Insights.  Many of my customers have been asking for this along with getting the Spark job data from the cluster (that will be a future project).
 
-## Issues
-- This is currently being tested.
-- The sed command in the appinsights_logging_init.sh could be smarter.  I just needs to append versus a full replace.
+I also added Log Analytics so that the server metrics will be captures and placed in Azure Monitor.
 
-## Configuration Steps
+## Configuration Steps: Application Insights
+1. Create Application Insights in Azure 
+2. Get your instrumentation key on the overview page
+2. Replace APPINSIGHTS_INSTRUMENTATIONKEY in the appinsights_logging_init.sh script
+
+## Configuration Steps: Log Analytics
+1. Create a Log Analytics account in Azure
+2. Get your workspace id on the overview page
+3. Get your primary key by clicking Advanced Settings | Connected Sources | Linux and copy primary key
+4. Replace LOG_ANALYTICS_WORKSPACE_ID in the appinsights_logging_init.sh script
+5. Replace LOG_ANALYTICS_PRIMARY_KEY in the appinsights_logging_init.sh script
+6. Get your primary key by clicking Advanced Settings | Data | Linux Performace Counters and click "Apply below configuration to my machines" then press Save
+7. Click the Add button (The UI should turn to a grid) then press Save
+
+### Configuration Steps: Databricks
 1. Create Databricks workspace in Azure
-2. Create Application Insights in Azure (get your instrumentation key)
-3. Install Databricks CLI
-4. Open your Azure Databricks workspace, click on the user icon and create a token
-5. Run "databricks configure --token" to configure the Databricks CLI
-6. Replace APPINSIGHTS_INSTRUMENTATIONKEY (00000000-0000-0000-0000-000000000000) in the appinsights_logging_init.sh script
-7. Run Upload-Items-To-Databricks.sh (change the .bat for Windows).  Linux you need to do a chmod +x on this file to run.
-8. Create a cluster in Databricks (any size and shape is fine)
+2. Install Databricks CLI
+3. Open your Azure Databricks workspace, click on the user icon and create a token
+4. Run "databricks configure --token" to configure the Databricks CLI
+5. Run Upload-Items-To-Databricks.sh (change the .bat for Windows).  Linux you need to do a chmod +x on this file to run.
+6. Create a cluster in Databricks (any size and shape is fine)
     - Make sure you click Advanced Options and "Init Scripts"
     - Add a script for "dbfs:/databricks/appinsights/appinsights_logging_init.sh"
     ![alt tag](https://raw.githubusercontent.com/AdamPaternostro/Azure-Databricks-Log4J-To-AppInsights/master/images/databrickscluster.png)
-9. Start the cluster    
+7. Start the cluster    
 
 ## Verification Steps
 1. Import the notebook AppInsightsTest
@@ -62,6 +72,13 @@ traces
 6. Run ``` customEvents | order by timestamp  desc ``` to see the custom event your Notebook wrote
 7. Run ``` customMetrics | order by timestamp  desc ``` to see the HeartbeatState
 8. Don't know which field has your data: ``` traces | where * contains "App Insights on Databricks"    ```
+9. Open your Log Analytics account
+   1. Click on Logs
+   2. Write a query against the Perf and/or Heartbeat tablesß
+
+## Features to make more Robust
+- The sed command in the appinsights_logging_init.sh could be smarter.  I just needs to append versus a full replace.
+
 
 ## Things you can do
 1. For query help see: https://docs.microsoft.com/en-us/azure/kusto/query/

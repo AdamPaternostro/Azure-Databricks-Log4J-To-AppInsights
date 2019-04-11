@@ -1,7 +1,7 @@
 # Azure-Databricks-Log4J-To-AppInsights
 Connect your Spark Databricks clusters Log4J output to the Application Insights Appender.  This will help you get your logs to a centralized location such as App Insights.  Many of my customers have been asking for this along with getting the Spark job data from the cluster (that will be a future project).
 
-I also added Log Analytics so that the server metrics will be captures and placed in Azure Monitor.
+I also added Log Analytics so that the server metrics will be captured and placed in Azure Monitor.
 
 ## Configuration Steps: Application Insights
 1. Create Application Insights in Azure 
@@ -66,7 +66,7 @@ traces
   timestamp 
 | order by timestamp desc
 ```
-ß
+
 ![alt tag](https://raw.githubusercontent.com/AdamPaternostro/Azure-Databricks-Log4J-To-AppInsights/master/images/formatteddata.png)
 
 6. Run ``` customEvents | order by timestamp  desc ``` to see the custom event your Notebook wrote
@@ -74,7 +74,8 @@ traces
 8. Don't know which field has your data: ``` traces | where * contains "App Insights on Databricks"    ```
 9. Open your Log Analytics account
    1. Click on Logs
-   2. Write a query against the Perf and/or Heartbeat tablesß
+   2. Write a query against the Perf and/or Heartbeat tables
+   ![alt tag](https://raw.githubusercontent.com/AdamPaternostro/Azure-Databricks-Log4J-To-AppInsights/master/images/perfdata.png)
 
 ## Features to make more Robust
 - The sed command in the appinsights_logging_init.sh could be smarter.  I just needs to append versus a full replace.

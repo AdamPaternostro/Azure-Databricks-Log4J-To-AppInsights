@@ -81,7 +81,7 @@ traces
 - The sed command in the appinsights_logging_init.sh could be smarter.  I just needs to append versus a full replace.
 
 ## Logging to Application Insights automatically
-By running the below code, each Spark job will start to begin to have data logged for you that you can then query in App Insights.
+By running the below code (in a notebook cell), each Spark job will start to begin to have data logged for you that you can then query in App Insights.
 ```
 // https://spark.apache.org/docs/2.2.0/api/java/org/apache/spark/scheduler/SparkListenerJobStart.html
 // https://spark.apache.org/docs/2.2.0/api/java/org/apache/spark/scheduler/SparkListenerJobEnd.html

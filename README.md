@@ -100,12 +100,28 @@ val telemetryClient = new TelemetryClient(configuration)
 class CustomListener extends SparkListener  {
   
   override def onJobStart(jobStart: SparkListenerJobStart) {
-    telemetryClient.trackMetric(s"Job started ${jobStart.jobId} -> stages", jobStart.stageInfos.size);
+    val properties = new HashMap[String, String]()
+    properties.put("jobId", jobStart.jobId.toString)
+
+    val metrics = new HashMap[String, java.lang.Double]()
+    metrics.put("stageInfos.size", jobStart.stageInfos.size)
+    metrics.put("time", jobStart.time)
+
+    telemetryClient.trackEvent("onJobStart", properties, metrics)
   }
   
   
   override def onJobEnd(jobEnd: SparkListenerJobEnd): Unit = {
     telemetryClient.trackMetric(s"Job ended ${jobEnd.jobId} with result ${jobEnd.jobResult} -> time", jobEnd.time);
+
+    val properties = new HashMap[String, String]()
+    properties.put("jobId", jobEnd.jobId.toString)
+    properties.put("jobResult", jobEnd.jobResult.toString)
+
+    val metrics = new HashMap[String, java.lang.Double]()
+    metrics.put("time", jobEnd.time)
+
+    telemetryClient.trackEvent("onJobEnd", properties, metrics)
   }
   
   
@@ -118,8 +134,8 @@ class CustomListener extends SparkListener  {
     val metrics = new HashMap[String, java.lang.Double]()
     metrics.put("attemptNumber", stageCompleted.stageInfo.attemptNumber)
     metrics.put("numTasks", stageCompleted.stageInfo.numTasks)
-    // metrics.put("submissionTime", stageCompleted.stageInfo.submissionTime.toDouble)
-    // metrics.put("completionTime", stageCompleted.stageInfo.completionTime)
+    metrics.put("submissionTime", (stageCompleted.stageInfo.submissionTime.toString).toDouble)
+    metrics.put("completionTime", (stageCompleted.stageInfo.completionTime.toString).toDouble)
     metrics.put("executorDeserializeTime", stageCompleted.stageInfo.taskMetrics.executorDeserializeTime)
     metrics.put("executorDeserializeCpuTime", stageCompleted.stageInfo.taskMetrics.executorDeserializeCpuTime)
     metrics.put("executorRunTime", stageCompleted.stageInfo.taskMetrics.executorRunTime)

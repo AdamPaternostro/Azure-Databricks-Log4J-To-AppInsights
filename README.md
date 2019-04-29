@@ -77,10 +77,7 @@ traces
    2. Write a query against the Perf and/or Heartbeat tables
    ![alt tag](https://raw.githubusercontent.com/AdamPaternostro/Azure-Databricks-Log4J-To-AppInsights/master/images/perfdata.png)
 
-## Features to make more Robust
-- The sed command in the appinsights_logging_init.sh could be smarter.  I just needs to append versus a full replace.
-
-## Logging to Application Insights automatically
+## Logging each Spark Job to Application Insights automatically
 By running the below code (in a notebook cell), each Spark job will start to begin to have data logged for you that you can then query in App Insights.
 ```
 // https://spark.apache.org/docs/2.1.0/api/java/org/apache/spark/scheduler/SparkListener.html
@@ -158,6 +155,9 @@ class CustomListener extends SparkListener  {
 val myListener=new CustomListener
 sc.addSparkListener(myListener)
 ```
+
+## Features to make more Robust
+- The sed command in the appinsights_logging_init.sh could be smarter.  I just needs to append versus a full replace.
 
 ## Things you can do
 1. For query help see: https://docs.microsoft.com/en-us/azure/kusto/query/

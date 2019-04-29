@@ -112,8 +112,6 @@ class CustomListener extends SparkListener  {
   
   
   override def onJobEnd(jobEnd: SparkListenerJobEnd): Unit = {
-    telemetryClient.trackMetric(s"Job ended ${jobEnd.jobId} with result ${jobEnd.jobResult} -> time", jobEnd.time);
-
     val properties = new HashMap[String, String]()
     properties.put("jobId", jobEnd.jobId.toString)
     properties.put("jobResult", jobEnd.jobResult.toString)
@@ -134,8 +132,8 @@ class CustomListener extends SparkListener  {
     val metrics = new HashMap[String, java.lang.Double]()
     metrics.put("attemptNumber", stageCompleted.stageInfo.attemptNumber)
     metrics.put("numTasks", stageCompleted.stageInfo.numTasks)
-    metrics.put("submissionTime", (stageCompleted.stageInfo.submissionTime.toString).toDouble)
-    metrics.put("completionTime", (stageCompleted.stageInfo.completionTime.toString).toDouble)
+    //metrics.put("submissionTime", (stageCompleted.stageInfo.submissionTime.toString).toDouble)
+    //metrics.put("completionTime", (stageCompleted.stageInfo.completionTime.toString).toDouble)
     metrics.put("executorDeserializeTime", stageCompleted.stageInfo.taskMetrics.executorDeserializeTime)
     metrics.put("executorDeserializeCpuTime", stageCompleted.stageInfo.taskMetrics.executorDeserializeCpuTime)
     metrics.put("executorRunTime", stageCompleted.stageInfo.taskMetrics.executorRunTime)

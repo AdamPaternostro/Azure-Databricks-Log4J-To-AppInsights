@@ -83,6 +83,7 @@ traces
 ## Logging to Application Insights automatically
 By running the below code (in a notebook cell), each Spark job will start to begin to have data logged for you that you can then query in App Insights.
 ```
+// https://spark.apache.org/docs/2.1.0/api/java/org/apache/spark/scheduler/SparkListener.html
 // https://spark.apache.org/docs/2.2.0/api/java/org/apache/spark/scheduler/SparkListenerJobStart.html
 // https://spark.apache.org/docs/2.2.0/api/java/org/apache/spark/scheduler/SparkListenerJobEnd.html
 // https://spark.apache.org/docs/2.2.0/api/java/org/apache/spark/scheduler/SparkListenerStageCompleted.html
@@ -102,6 +103,9 @@ class CustomListener extends SparkListener  {
   override def onJobStart(jobStart: SparkListenerJobStart) {
     val properties = new HashMap[String, String]()
     properties.put("jobId", jobStart.jobId.toString)
+    properties.put("clusterId", spark.conf.get("spark.databricks.clusterUsageTags.clusterId"))
+    properties.put("clusterName", spark.conf.get("spark.databricks.clusterUsageTags.clusterName"))
+    
 
     val metrics = new HashMap[String, java.lang.Double]()
     metrics.put("stageInfos.size", jobStart.stageInfos.size)
@@ -114,7 +118,8 @@ class CustomListener extends SparkListener  {
   override def onJobEnd(jobEnd: SparkListenerJobEnd): Unit = {
     val properties = new HashMap[String, String]()
     properties.put("jobId", jobEnd.jobId.toString)
-    properties.put("jobResult", jobEnd.jobResult.toString)
+    properties.put("clusterId", spark.conf.get("spark.databricks.clusterUsageTags.clusterId"))
+    properties.put("clusterName", spark.conf.get("spark.databricks.clusterUsageTags.clusterName"))
 
     val metrics = new HashMap[String, java.lang.Double]()
     metrics.put("time", jobEnd.time)
@@ -128,6 +133,8 @@ class CustomListener extends SparkListener  {
     val properties = new HashMap[String, String]()
     properties.put("stageId", stageCompleted.stageInfo.stageId.toString)
     properties.put("name", stageCompleted.stageInfo.name)
+    properties.put("clusterId", spark.conf.get("spark.databricks.clusterUsageTags.clusterId"))
+    properties.put("clusterName", spark.conf.get("spark.databricks.clusterUsageTags.clusterName"))
 
     val metrics = new HashMap[String, java.lang.Double]()
     metrics.put("attemptNumber", stageCompleted.stageInfo.attemptNumber)

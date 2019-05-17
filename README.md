@@ -117,6 +117,7 @@ class CustomListener extends SparkListener  {
     properties.put("jobId", jobEnd.jobId.toString)
     properties.put("clusterId", spark.conf.get("spark.databricks.clusterUsageTags.clusterId"))
     properties.put("clusterName", spark.conf.get("spark.databricks.clusterUsageTags.clusterName"))
+    properties.put("jobResult", jobEnd.jobResult.toStringStart.jobId.toString)
 
     val metrics = new HashMap[String, java.lang.Double]()
     metrics.put("time", jobEnd.time)

@@ -44,7 +44,8 @@ I also added Log Analytics so that the server metrics will be captured and place
     6. Cell 6 writes to App Insights via the App Insights API.  This will show as a "Custom Event" (customEvents table).
 1. <OPTIONAL> Run the AppInsightsPython Python notebook
     1. Cell 1 creates a reference to the Log4J logger (called aiAppender) and writes to Log4J so the message will appear in App Insights.
-    1. Cell 2 writes to App Insights via the App Insights API. This will show as a "Custom Event" (customEvents table).
+    1. Cell 2 configures the connection to App Insights via the `appinsights` package.
+    1. Cell 3 writes to App Insights via the App Insights API. This will show as a "Custom Event" (customEvents table).
 1. Open your App Insights account in the Azure Portal
 1. Click on Search (top bar or left menu)
 1. Click Refresh (over and over until you see data)

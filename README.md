@@ -28,19 +28,27 @@ I also added Log Analytics so that the server metrics will be captured and place
     - Add a script for "dbfs:/databricks/appinsights/appinsights_logging_init.sh"
     ![alt tag](https://raw.githubusercontent.com/AdamPaternostro/Azure-Databricks-Log4J-To-AppInsights/master/images/databrickscluster.png)
 7. Start the cluster    
+8. <OPTIONAL> Install the `applicationsights` Python package [from PyPi](https://pypi.org/project/applicationinsights/) to the cluster.
+    - This provides the ability to send custom events and metrics to app insights.
+    - You'll need to follow this step if you plan on logging Custom Metrics or Events to App Insights on Pyspark.
+    - Steps to [install a library](https://docs.azuredatabricks.net/user-guide/libraries.html#install-libraries) on Azure Databricks
 
 ## Verification Steps
-1. Import the notebook AppInsightsTest
-2. Run the notebook
+1. Import the notebooks in AppInsightsTest
+1. Run the AppInsightsTest Scala notebook
     1. Cell 1 displays your application insights key
     2. Cell 2 displays your jars (application insights jars should be in here)
     3. Cell 3 displays your log4j.properities file on the "driver" (which has the aiAppender)
     4. Cell 4 displays your log4j.properities file on the "executor" (which has the aiAppender)
     5. Cell 5 writes to Log4J so the message will appear in App Insights
     6. Cell 6 writes to App Insights via the App Insights API.  This will show as a "Custom Event" (customEvents table).
-3. Open your App Insights account in the Azure Portal
-4. Click on Search (top bar or left menu)
-5. Click Refresh (over and over until you see data)
+1. <OPTIONAL> Run the AppInsightsPython Python notebook
+    1. Cell 1 creates a reference to the Log4J logger (called aiAppender) and writes to Log4J so the message will appear in App Insights.
+    1. Cell 2 configures the connection to App Insights via the `appinsights` package.
+    1. Cell 3 writes to App Insights via the App Insights API. This will show as a "Custom Event" (customEvents table).
+1. Open your App Insights account in the Azure Portal
+1. Click on Search (top bar or left menu)
+1. Click Refresh (over and over until you see data)
     - For a new App Insights account this can take 10 to 15 minutes to really initialize
     - For an account that is initialized expect a 1 to 3 minute delay for telemetry
 
@@ -48,7 +56,7 @@ I also added Log Analytics so that the server metrics will be captured and place
 1. The data will come into App Insights as a Trace
 ![alt tag](https://raw.githubusercontent.com/AdamPaternostro/Azure-Databricks-Log4J-To-AppInsights/master/images/dimensiondata.png)
 
-2. This means the data will be in the customDimensions field as a property bad
+2. This means the data will be in the customDimensions field as a property bag
 3. Open the Analytic query for App Insights
 4. Run ``` traces | order by timestamp desc ```
    - You will notice how customDimensions contains the fields 

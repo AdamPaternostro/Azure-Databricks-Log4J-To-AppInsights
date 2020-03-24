@@ -3,6 +3,9 @@ Connect your Spark Databricks clusters Log4J output to the Application Insights 
 
 I also added Log Analytics so that the server metrics will be captured and placed in Azure Monitor.
 
+## Using a JAR file instead of this Notebook sample
+This project as been extended as a JAR file by Jeremy Peach: https://github.com/AnalyticJeremy/Azure-Databricks-Monitoring
+
 ## Configuration Steps: Application Insights
 1. Create Application Insights in Azure 
 2. Get your instrumentation key on the overview page

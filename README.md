@@ -4,7 +4,7 @@ Connect your Spark Databricks clusters Log4J output to the Application Insights 
 I also added Log Analytics so that the server metrics will be captured and placed in Azure Monitor.
 
 ## Using a JAR file instead of this Notebook sample
-This project as been extended as a JAR file by Jeremy Peach: https://github.com/AnalyticJeremy/Azure-Databricks-Monitoring
+This project as been extended as a JAR file by Jeremy Peach: https://github.com/AnalyticJeremy/Azure-Databricks-Monitoring.  The JAR file will install configure this Spark listener upon the cluster creation.
 
 ## Configuration Steps: Application Insights
 1. Create Application Insights in Azure 
@@ -38,20 +38,20 @@ This project as been extended as a JAR file by Jeremy Peach: https://github.com/
 
 ## Verification Steps
 1. Import the notebooks in AppInsightsTest
-1. Run the AppInsightsTest Scala notebook
+2. Run the AppInsightsTest Scala notebook
     1. Cell 1 displays your application insights key
     2. Cell 2 displays your jars (application insights jars should be in here)
     3. Cell 3 displays your log4j.properities file on the "driver" (which has the aiAppender)
     4. Cell 4 displays your log4j.properities file on the "executor" (which has the aiAppender)
     5. Cell 5 writes to Log4J so the message will appear in App Insights
     6. Cell 6 writes to App Insights via the App Insights API.  This will show as a "Custom Event" (customEvents table).
-1. <OPTIONAL> Run the AppInsightsPython Python notebook
+3. <OPTIONAL> Run the AppInsightsPython Python notebook.  
     1. Cell 1 creates a reference to the Log4J logger (called aiAppender) and writes to Log4J so the message will appear in App Insights.
     1. Cell 2 configures the connection to App Insights via the `appinsights` package.
     1. Cell 3 writes to App Insights via the App Insights API. This will show as a "Custom Event" (customEvents table).
-1. Open your App Insights account in the Azure Portal
-1. Click on Search (top bar or left menu)
-1. Click Refresh (over and over until you see data)
+4. Open your App Insights account in the Azure Portal
+5. Click on Search (top bar or left menu)
+6. Click Refresh (over and over until you see data)
     - For a new App Insights account this can take 10 to 15 minutes to really initialize
     - For an account that is initialized expect a 1 to 3 minute delay for telemetry
 
